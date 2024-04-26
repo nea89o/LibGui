@@ -61,13 +61,9 @@ public class ScreenNetworkingImpl implements ScreenNetworking {
 		buf.writeVarInt(description.syncId);
 		buf.writeIdentifier(message);
 		writer.accept(buf);
-		description.getPacketSender().sendPacket(side == NetworkSide.SERVER ? SCREEN_MESSAGE_S2C : SCREEN_MESSAGE_C2S, buf);
 	}
 
 	public static void init() {
-		ServerPlayNetworking.registerGlobalReceiver(SCREEN_MESSAGE_C2S, (server, player, networkHandler, buf, responseSender) -> {
-			handle(server, player, buf);
-		});
 	}
 
 	public static void handle(Executor executor, PlayerEntity player, PacketByteBuf buf) {

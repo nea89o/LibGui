@@ -170,21 +170,6 @@ public class SyncedGuiDescription extends ScreenHandler implements GuiDescriptio
 	/** WILL MODIFY toInsert! Returns true if anything was inserted. */
 	private boolean insertIntoExisting(ItemStack toInsert, Slot slot, PlayerEntity player) {
 		ItemStack curSlotStack = slot.getStack();
-		if (!curSlotStack.isEmpty() && ItemStack.canCombine(toInsert, curSlotStack) && slot.canInsert(toInsert)) {
-			int combinedAmount = curSlotStack.getCount() + toInsert.getCount();
-			int maxAmount = Math.min(toInsert.getMaxCount(), slot.getMaxItemCount(toInsert));
-			if (combinedAmount <= maxAmount) {
-				toInsert.setCount(0);
-				curSlotStack.setCount(combinedAmount);
-				slot.markDirty();
-				return true;
-			} else if (curSlotStack.getCount() < maxAmount) {
-				toInsert.decrement(maxAmount - curSlotStack.getCount());
-				curSlotStack.setCount(maxAmount);
-				slot.markDirty();
-				return true;
-			}
-		}
 		return false;
 	}
 	
